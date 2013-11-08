@@ -12,6 +12,7 @@ import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import model.ENT;
 
 /**
  *
@@ -20,10 +21,12 @@ import javax.swing.JPanel;
 public class IHM extends JFrame implements Observer{
     private JPanel controlPanel;
     private ENTController entCtrl;
+    private ENT model;
 
-    public IHM(ENTController entCtrl) {
+    public IHM(ENT model, ENTController entCtrl) {
         super("ENT");
         
+        this.model = model;
         this.entCtrl = entCtrl;
         this.entCtrl.subscribe(this);
         

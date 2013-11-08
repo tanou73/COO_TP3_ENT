@@ -4,7 +4,6 @@
  */
 package model;
 
-import controller.ENTController;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -14,7 +13,6 @@ import java.util.Observable;
  */
 public class ENT extends Observable {
     private ArrayList<Group> groups;
-    private ENTController ctrl;
 
     public ENT() {
         this.groups = new ArrayList<>();
@@ -22,9 +20,7 @@ public class ENT extends Observable {
 
     /** Getters & Setters **/ 
     
-    public void setCtrl(ENTController ctrl){
-        this.ctrl = ctrl;
-    }
+
      
     public void add(Group g) {
         groups.add(g);
