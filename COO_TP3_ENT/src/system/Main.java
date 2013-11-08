@@ -4,10 +4,9 @@
  */
 package system;
 
-import model.Document;
-import model.Group;
-import model.Repository;
-import model.User;
+import controller.ENTController;
+import model.ENT;
+import view.IHM;
 
 /**
  *
@@ -15,7 +14,7 @@ import model.User;
  */
 public class Main {
     public static void main(String[] args) {
-        User henry = new User("Henry");
+        /*User henry = new User("Henry");
         User robert = new User("Robert");
         
         Group iut = new Group("IUT");
@@ -37,6 +36,11 @@ public class Main {
         iut.addStuff(cv);
         iut.addStuff(cover);
         
-        System.out.println(iut.toString());
+        System.out.println(iut.toString());*/      
+        
+        ENT ent = new ENT();
+        ENTController entCtrl = new ENTController(ent);
+        
+        new IHM(ent,entCtrl);
     }
 }
