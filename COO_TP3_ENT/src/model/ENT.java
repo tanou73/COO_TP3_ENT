@@ -13,14 +13,13 @@ import java.util.Observable;
  */
 public class ENT extends Observable {
     private ArrayList<Group> groups;
+    private User connectedUser;
 
     public ENT() {
         this.groups = new ArrayList<>();
     }
 
-    /** Getters & Setters **/ 
-    
-
+    /** Getters & Setters **/
      
     public void add(Group g) {
         groups.add(g);
@@ -38,4 +37,20 @@ public class ENT extends Observable {
         return groups.get(index);
     }
     
+    public Group getGroup(String name) {
+        for (Group group : groups) {
+            if ( group.getName().equalsIgnoreCase(name) )
+                return group;
+        }
+        
+        return null;
+    }
+
+    public User getConnectedUser() {
+        return connectedUser;
+    }
+
+    public void setConnectedUser(User connectedUser) {
+        this.connectedUser = connectedUser;
+    }    
 }

@@ -10,11 +10,11 @@ import java.util.ArrayList;
  *
  * @author hugo
  */
-public class Repository extends Stuff {
+public class Folder extends Stuff {
     /** childs **/
     protected ArrayList<Stuff> childs;
 
-    public Repository(String name) {
+    public Folder(String name) {
         super(name);
         this.childs = new ArrayList<>();
     }

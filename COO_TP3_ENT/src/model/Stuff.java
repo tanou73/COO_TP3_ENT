@@ -12,20 +12,29 @@ public class Stuff {
     protected String name;
     
     /** parent folder ( null if root ) **/
-    protected Repository parent;
+    protected Folder parent;
 
     public Stuff(String name) {
         this.name = name;
     }
 
-    public Repository getParent() {
+    public Folder getParent() {
         return parent;
     }
 
-    public void setParent(Repository parent) {
+    public void setParent(Folder parent) {
         this.parent = parent;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    
     @Override
     public String toString() {
         return "\n -- STUFFS -- \n " + "name=" + name ;

@@ -4,7 +4,6 @@
  */
 package model;
 
-import controller.GroupController;
 import java.util.ArrayList;
 
 /**
@@ -18,8 +17,6 @@ public class Group {
     protected ArrayList<Stuff> stuffs;
     /** name of the group **/ 
     protected String name;
-
-    private GroupController ctrl;
     
     /** Constructor **/
     public Group(String name) {
@@ -50,6 +47,15 @@ public class Group {
         this.stuffs.remove(stuffToRemove);
     }
     
+    /** remove a group **/
+    public Stuff getStuff(String name) {
+        for (Stuff stuff : stuffs) {
+            if ( stuff.getName().equalsIgnoreCase(name) )
+                return stuff;
+        }
+        
+        return null;
+    }
     /** Getters & Setters **/
     
     public String getName() {
@@ -58,14 +64,6 @@ public class Group {
 
     public void setName(String name) {
         this.name = name;
-    }
-    
-    public void setCtrl(GroupController ctrl) {
-        this.ctrl = ctrl;
-    }
-    
-    public GroupController getCtrl(){
-        return ctrl;
     }
 
     @Override
