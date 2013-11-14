@@ -43,6 +43,16 @@ public class Folder extends Stuff {
         this.name = name;
     }
 
+    public ArrayList<Stuff> getChilds() {
+        return childs;
+    }
+
+    public void setChilds(ArrayList<Stuff> childs) {
+        this.childs = childs;
+    }
+
+    
+    
     @Override
     public String toString() {
         String ret = super.toString() + "\n -> Repository{";

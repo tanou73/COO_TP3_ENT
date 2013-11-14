@@ -8,11 +8,12 @@ package model;
  *
  * @author hugo
  */
-public class Stuff {
+public abstract class Stuff {
     protected String name;
     
     /** parent folder ( null if root ) **/
     protected Folder parent;
+    protected Relation relation;
 
     public Stuff(String name) {
         this.name = name;
@@ -33,10 +34,17 @@ public class Stuff {
     public void setName(String name) {
         this.name = name;
     }
-
+    
     
     @Override
     public String toString() {
-        return "\n -- STUFFS -- \n " + "name=" + name ;
+        return "\n -- STUFFS -- \n " + "name=" + name  + ( (relation != null) ? " " + relation.getName()+ " " + relation.getStuff().getName() : "");
+    }
+    public Relation getRelation() {
+        return relation;
+    }
+
+    public void setRelation(Relation relation) {
+        this.relation = relation;
     }
 }

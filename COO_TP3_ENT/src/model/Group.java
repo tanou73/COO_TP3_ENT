@@ -11,53 +11,64 @@ import java.util.ArrayList;
  * @author hugo
  */
 public class Group {
-    /** users in the group **/
+
+    /**
+     * users in the group *
+     */
     protected ArrayList<User> users;
-    /** list of objects contained into the group **/
-    protected ArrayList<Stuff> stuffs;
-    /** name of the group **/ 
+    /**
+     * list of objects contained into the group *
+     */
+    protected Folder rootFolder;
+    /**
+     * name of the group *
+     */
     protected String name;
-    
-    /** Constructor **/
+
+    /**
+     * Constructor *
+     */
     public Group(String name) {
         this.name = name;
         users = new ArrayList<>();
-        stuffs = new ArrayList<>();
+        rootFolder = new Folder(name);
     }
 
-    /** add a group **/
+    /**
+     * add a group *
+     */
     public void addUser(User userToAdd) {
         this.users.add(userToAdd);
         userToAdd.addGroup(this);
     }
-    
-    /** remove a group **/
+
+    /**
+     * remove a group *
+     */
     public void removeUser(User userToRemove) {
         this.users.remove(userToRemove);
         userToRemove.removeGroup(this);
     }
-    
-    /** add a group **/
-    public void addStuff(Stuff stuffToAdd) {
-        this.stuffs.add(stuffToAdd);
+
+    /**
+     * Getters & Setters *
+     */
+    public ArrayList<User> getUsers() {
+        return users;
     }
-    
-    /** remove a group **/
-    public void removeStuff(Stuff stuffToRemove) {
-        this.stuffs.remove(stuffToRemove);
+
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
     }
-    
-    /** remove a group **/
-    public Stuff getStuff(String name) {
-        for (Stuff stuff : stuffs) {
-            if ( stuff.getName().equalsIgnoreCase(name) )
-                return stuff;
-        }
-        
-        return null;
+
+    public Folder getRootFolder() {
+        return rootFolder;
     }
-    /** Getters & Setters **/
-    
+
+    public void setRootFolder(Folder rootFolder) {
+        this.rootFolder = rootFolder;
+    }
+
     public String getName() {
         return name;
     }
@@ -68,19 +79,15 @@ public class Group {
 
     @Override
     public String toString() {
-        String toReturn = "\n -- Group "+ name +" -- \n";
-        
-        toReturn += "users : \n";        
+        String toReturn = "\n -- Group " + name + " -- \n";
+
+        toReturn += "users : \n";
         for (User user : users) {
             toReturn += user.toString() + "\n";
         }
-        
-        toReturn += "stuffs : \n";        
-        for (Stuff stuff : stuffs) {
-            toReturn += stuff.toString() + "\n";
-        }
-        
+
+         toReturn += "stuffs : \n" + rootFolder.toString();
+         
         return toReturn + " \n\n ";
     }
-    
 }
