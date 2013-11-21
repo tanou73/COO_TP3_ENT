@@ -60,8 +60,20 @@ public class ENTController {
         joinGroup(name);
     }
 
-    public void joinGroup(String grpName) throws UnauthorisedException, BadArgumentException{
+    public void joinGroup(String grpName) throws UnauthorisedException, BadArgumentException {
         model.getGroup(grpName).addUser(model.getConnectedUser());
+    }
+
+    public void quitGroup(String grpName) throws BadArgumentException, UnauthorisedException {
+        model.getGroup(grpName).removeUser(model.getConnectedUser());
+    }
+    
+    public void removeGroup(String name) throws BadArgumentException{
+        Group group = model.getGroup(name);
+        for (User user : group.getUsers()) {
+            user.removeGroup(group);
+        }
+       model.removeGroup(group);
     }
 
     public ArrayList<Group> getUserGroups() throws UnauthorisedException {
