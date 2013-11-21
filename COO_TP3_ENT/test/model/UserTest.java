@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import utils.BadArgumentException;
 import utils.UnauthorisedException;
 
 /**
@@ -46,7 +47,7 @@ public class UserTest {
     }
 
     @Test
-    public void connection() throws UnauthorisedException {
+    public void connection() throws UnauthorisedException, BadArgumentException {
         User bob = new User("Bob");
         User morane = new User("Morane");
 
@@ -58,7 +59,7 @@ public class UserTest {
     }
 
     @Test(expected = UnauthorisedException.class)
-    public void disconnection() throws UnauthorisedException {
+    public void disconnection() throws UnauthorisedException, BadArgumentException {
         User bob = new User("Bob");
 
         entCtrl.connectUser(bob);

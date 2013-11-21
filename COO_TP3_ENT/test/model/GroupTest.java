@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import utils.BadArgumentException;
 import utils.DuplicateItemException;
 import utils.UnauthorisedException;
 
@@ -44,7 +45,7 @@ public class GroupTest {
     }
     
     @Test
-    public void createGroup() throws UnauthorisedException, DuplicateItemException {
+    public void createGroup() throws UnauthorisedException, DuplicateItemException, BadArgumentException {
         User bob = new User("Bob");
         String groupName = "test";
 

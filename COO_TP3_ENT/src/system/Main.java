@@ -63,29 +63,5 @@ public class Main {
         
         System.out.println(grp);
 */
-        /* ENT ent = new ENT();
-         ENTController entCtrl = new ENTController(ent);
-        
-         new IHM(ent,entCtrl);*/
-        
-        
-        User bob = new User("bob");
-        User laurane = new User("laurane");
-
-        ENT ent = new ENT();
-        ENTController entCtrl = new ENTController(ent);
-
-        entCtrl.connectUser(bob);
-
-    //    entCtrl.createGroup("Papyslave");
-
-        entCtrl.connectUser(laurane);
-        try {
-            entCtrl.joinGroup("Papyslave");
-        } catch (UnauthorisedException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        entCtrl.connectUser(bob);
     }
 }
