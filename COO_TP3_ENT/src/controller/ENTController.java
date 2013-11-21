@@ -55,7 +55,7 @@ public class ENTController {
                 throw new DuplicateItemException("group: " + name);
             }
         }
-        Group grp = new Group(name);
+        Group grp = new Group(name, model.getConnectedUser());
         model.addGroup(grp);
         joinGroup(name);
     }
@@ -67,13 +67,16 @@ public class ENTController {
     public void quitGroup(String grpName) throws BadArgumentException, UnauthorisedException {
         model.getGroup(grpName).removeUser(model.getConnectedUser());
     }
-    
-    public void removeGroup(String name) throws BadArgumentException{
+
+    public void removeGroup(String name) throws BadArgumentException, UnauthorisedException {
         Group group = model.getGroup(name);
+        if (!group.getOwner().equals(model.getConnectedUser())) {
+            throw new UnauthorisedException(("Group doesn't belong to you, dear"));
+        }
         for (User user : group.getUsers()) {
             user.removeGroup(group);
         }
-       model.removeGroup(group);
+        model.removeGroup(group);
     }
 
     public ArrayList<Group> getUserGroups() throws UnauthorisedException {
