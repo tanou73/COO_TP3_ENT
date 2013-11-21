@@ -24,14 +24,20 @@ public class Group {
      * name of the group *
      */
     protected String name;
+    /**
+     * owner of the group *
+     */
+    protected User owner;
 
     /**
      * Constructor *
      */
-    public Group(String name) {
+    public Group(String name, User owner) {
         this.name = name;
+        this.owner = owner;
         users = new ArrayList<>();
         rootFolder = new Folder(name);
+        
     }
 
     /**
@@ -76,6 +82,16 @@ public class Group {
     public void setName(String name) {
         this.name = name;
     }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+    
+    
 
     @Override
     public String toString() {
