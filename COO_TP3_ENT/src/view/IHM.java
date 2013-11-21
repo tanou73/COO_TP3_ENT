@@ -24,6 +24,7 @@ public class IHM extends JFrame implements Observer{
     private ENT model;
 
     public IHM(ENT model, ENTController entCtrl) {
+        
         super("ENT");
         
         this.model = model;
@@ -66,7 +67,7 @@ public class IHM extends JFrame implements Observer{
         butAddDoc.setVisible(true);
         butAddRepo.setVisible(true);
         
-        butAddGroup.addActionListener(entCtrl);
+     //   butAddGroup.addActionListener(entCtrl);
     }
 
     @Override

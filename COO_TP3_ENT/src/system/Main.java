@@ -19,7 +19,7 @@ import model.User;
 public class Main {
 
     public static void main(String[] args) {
-
+/*
         User bob = new User("bob");
         User laurane = new User("laurane");
 
@@ -44,9 +44,12 @@ public class Main {
         
         Document img = new Document(5, "patate", "bidon", "Monfichier.jpg");
         Document img2 = new Document(5, "iiii", "nnnn", "test.jpg");
+        Document img3 = new Document(6, "bvhfghfgh", "sssb", "test.jpg");
 
         entCtrl.addStuff(imagesFolder, img);
         entCtrl.addStuff(imagesFolder, img2);
+        entCtrl.addStuff(imagesFolder, img3);
+
 
         ArrayList<String> categories = new ArrayList<>();
         categories.add("est la correction de");
@@ -56,7 +59,7 @@ public class Main {
         entCtrl.addRelation(img2, img, categories.get(1));
         
         System.out.println(grp);
-
+*/
         /* ENT ent = new ENT();
          ENTController entCtrl = new ENTController(ent);
         
