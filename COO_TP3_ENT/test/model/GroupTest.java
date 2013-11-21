@@ -1,70 +1,60 @@
-package model;
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+package model;
+
 import controller.ENTController;
-import model.ENT;
-import model.User;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import utils.DuplicateItemException;
 import utils.UnauthorisedException;
 
 /**
  *
  * @author hugo
  */
-public class UserTest {
-
+public class GroupTest {
+    
     private ENTController entCtrl;
     private ENT model;
-
-    public UserTest() {
+    public GroupTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
         model = new ENT();
         this.entCtrl = new ENTController(model);
     }
-
+    
     @After
     public void tearDown() {
     }
-
+    
     @Test
-    public void connection() throws UnauthorisedException {
+    public void createGroup() throws UnauthorisedException, DuplicateItemException {
         User bob = new User("Bob");
-        User morane = new User("Morane");
+        String groupName = "test";
 
         entCtrl.connectUser(bob);
-        assertEquals(model.getConnectedUser(), bob);
-
-        entCtrl.connectUser(morane);
-        assertEquals(model.getConnectedUser(), morane);
+        
+        entCtrl.createGroup(groupName);
+        
+        Group grp = entCtrl.getUserGroup(groupName);
+        
+        assertTrue(model.getGroups().contains(grp));
     }
-
-    @Test(expected = UnauthorisedException.class)
-    public void disconnection() throws UnauthorisedException {
-        User bob = new User("Bob");
-
-        entCtrl.connectUser(bob);
-        assertEquals(model.getConnectedUser(), bob);
-
-        entCtrl.disconnectUser();
-        model.getConnectedUser();
-    }
+    
 }

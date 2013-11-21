@@ -58,8 +58,8 @@ public class ENTController {
             }
         }
         Group grp = new Group(name);
-        joinGroup(name);
         model.addGroup(grp);
+        joinGroup(name);
     }
 
     public void joinGroup(String grpName) throws UnauthorisedException {
