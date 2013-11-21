@@ -10,8 +10,6 @@ import model.Document;
 import model.ENT;
 import model.Folder;
 import model.Group;
-import model.Relation;
-import model.Stuff;
 import model.User;
 
 /**
@@ -43,12 +41,12 @@ public class Main {
         Folder documentFolder = entCtrl.createFolder(grp, null, "documents");
 
         Folder imagesFolder = entCtrl.createFolder(grp, documentFolder, "image");
+        
         Document img = new Document(5, "patate", "bidon", "Monfichier.jpg");
         Document img2 = new Document(5, "iiii", "nnnn", "test.jpg");
 
         entCtrl.addStuff(imagesFolder, img);
         entCtrl.addStuff(imagesFolder, img2);
-
 
         ArrayList<String> categories = new ArrayList<>();
         categories.add("est la correction de");
