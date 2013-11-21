@@ -6,11 +6,14 @@ package system;
 
 import controller.ENTController;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Document;
 import model.ENT;
 import model.Folder;
 import model.Group;
 import model.User;
+import utils.UnauthorisedException;
 
 /**
  *
@@ -64,5 +67,25 @@ public class Main {
          ENTController entCtrl = new ENTController(ent);
         
          new IHM(ent,entCtrl);*/
+        
+        
+        User bob = new User("bob");
+        User laurane = new User("laurane");
+
+        ENT ent = new ENT();
+        ENTController entCtrl = new ENTController(ent);
+
+        entCtrl.connectUser(bob);
+
+    //    entCtrl.createGroup("Papyslave");
+
+        entCtrl.connectUser(laurane);
+        try {
+            entCtrl.joinGroup("Papyslave");
+        } catch (UnauthorisedException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        entCtrl.connectUser(bob);
     }
 }
