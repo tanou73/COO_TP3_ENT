@@ -105,4 +105,70 @@ public class GroupTest {
         assertTrue(bob.getUserGroups().contains(grp));
         assertTrue(morane.getUserGroups().contains(grp));
     }
+    
+    @Test
+    public void quitGroup() throws UnauthorisedException, DuplicateItemException, BadArgumentException {
+        User bob = new User("Bob");
+        User morane = new User("Morane");
+        String groupName = "test";
+
+        entCtrl.connectUser(bob);
+        
+        entCtrl.createGroup(groupName);
+        
+        entCtrl.connectUser(morane);
+        
+        entCtrl.joinGroup(groupName);
+        
+        Group grp = entCtrl.getUserGroup(groupName);  
+        
+        entCtrl.quitGroup(groupName);        
+        
+        assertFalse(grp.getUsers().contains(morane));
+        assertFalse(morane.getUserGroups().contains(grp));
+    }
+    
+    @Test
+    public void removeGroup() throws UnauthorisedException, DuplicateItemException, BadArgumentException {
+        User bob = new User("Bob");
+        User morane = new User("Morane");
+        String groupName = "test";
+
+        entCtrl.connectUser(bob);
+        
+        entCtrl.createGroup(groupName);
+        
+        entCtrl.connectUser(morane);
+        
+        entCtrl.joinGroup(groupName);
+        
+        Group grp = entCtrl.getUserGroup(groupName);  
+        
+        entCtrl.connectUser(bob);
+        
+        entCtrl.removeGroup(groupName);        
+        
+        assertFalse(bob.getUserGroups().contains(grp));
+        assertFalse(morane.getUserGroups().contains(grp));
+        assertFalse(model.getGroups().contains(grp));
+    }
+    
+    @Test(expected = UnauthorisedException.class)
+    public void removeGroupUnauthorised() throws UnauthorisedException, DuplicateItemException, BadArgumentException {
+        User bob = new User("Bob");
+        User morane = new User("Morane");
+        String groupName = "test";
+
+        entCtrl.connectUser(bob);
+        
+        entCtrl.createGroup(groupName);
+        
+        entCtrl.connectUser(morane);
+        
+        entCtrl.joinGroup(groupName);
+        
+        Group grp = entCtrl.getUserGroup(groupName);  
+        
+        entCtrl.removeGroup(groupName);
+    }
 }
