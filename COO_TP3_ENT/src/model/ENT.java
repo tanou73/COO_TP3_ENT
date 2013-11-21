@@ -6,6 +6,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import utils.UnauthorisedException;
 
 /**
  *
@@ -22,16 +23,28 @@ public class ENT extends Observable {
         this.relationsNames = new ArrayList<>();
     }
 
+    public void addRelationName(String name) {
+        relationsNames.add(name);
+    }
+
+    public void removeRelationName(String name) {
+        for (String relation : relationsNames) {
+            if (relation.equals(name)) {
+                relationsNames.remove(name);
+            }
+        }
+    }
+
     /**
      * Getters & Setters *
      */
-    public void add(Group g) {
+    public void addGroup(Group g) {
         groups.add(g);
         setChanged();
         notifyObservers("GROUP");
     }
 
-    public void remove(Group g) {
+    public void removeGroup(Group g) {
         groups.remove(g);
         setChanged();
         notifyObservers("GROUP");
@@ -50,7 +63,9 @@ public class ENT extends Observable {
         return null;
     }
 
-    public User getConnectedUser() {
+    public User getConnectedUser() throws UnauthorisedException {
+        if (connectedUser == null)
+            throw  new UnauthorisedException("User not connected");
         return connectedUser;
     }
 
@@ -73,6 +88,4 @@ public class ENT extends Observable {
     public void setRelationsNames(ArrayList<String> relationsNames) {
         this.relationsNames = relationsNames;
     }
-    
-    
 }
