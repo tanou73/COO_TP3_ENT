@@ -4,13 +4,10 @@
  */
 package controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import model.Group;
 import model.ENT;
 import model.Folder;
@@ -18,6 +15,7 @@ import model.Relation;
 import model.Stuff;
 import model.SuperUser;
 import model.User;
+import utils.BadArgumentException;
 import utils.DuplicateItemException;
 import utils.UnauthorisedException;
 
@@ -37,9 +35,9 @@ public class ENTController {
         model.addObserver(view);
     }
 
-    public void connectUser(User user) {
+    public void connectUser(User user) throws BadArgumentException {
         if (user == null) {
-            throw new IllegalArgumentException("user is null");
+            throw new BadArgumentException("user is null");
         }
         model.setConnectedUser(user);
     }
@@ -48,12 +46,12 @@ public class ENTController {
         model.setConnectedUser(null);
     }
 
-    public void createGroup(String name) throws UnauthorisedException, DuplicateItemException {
+    public void createGroup(String name) throws UnauthorisedException, DuplicateItemException, BadArgumentException {
         if (name == null) {
-            throw new IllegalArgumentException("Name is null");
+            throw new BadArgumentException("Name is null");
         }
         for (Group group : model.getGroups()) {
-            if (group.getName().equals(name)) {
+            if (group.getName().equalsIgnoreCase(name)) {
                 throw new DuplicateItemException("group: " + name);
             }
         }
@@ -62,8 +60,7 @@ public class ENTController {
         model.addGroup(grp);
     }
 
-    public void joinGroup(String grpName) throws UnauthorisedException {
-
+    public void joinGroup(String grpName) throws UnauthorisedException, BadArgumentException{
         model.getGroup(grpName).addUser(model.getConnectedUser());
     }
 
@@ -71,15 +68,14 @@ public class ENTController {
         return model.getConnectedUser().getUserGroups();
     }
 
-    public Group getUserGroup(String name) throws UnauthorisedException {
+    public Group getUserGroup(String name) throws UnauthorisedException, BadArgumentException {
         ArrayList<Group> grps = model.getConnectedUser().getUserGroups();
-
         for (Group group : grps) {
             if (group.getName().equalsIgnoreCase(name)) {
                 return group;
             }
         }
-        return null;
+        throw new BadArgumentException("group not found");
     }
 
     public Folder createFolder(Group grp, Folder parent, String name) {
@@ -97,7 +93,7 @@ public class ENTController {
         }
     }
 
-    public void addStuff(Folder parentFolder, Stuff stuff) {
+    public void addStuff(Folder parentFolder, Stuff stuff) throws BadArgumentException {
         if (parentFolder != null && stuff != null) {
             try {
                 parentFolder.addStuff(stuff);
@@ -105,7 +101,7 @@ public class ENTController {
                 Logger.getLogger(ENTController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new BadArgumentException();
         }
 
     }

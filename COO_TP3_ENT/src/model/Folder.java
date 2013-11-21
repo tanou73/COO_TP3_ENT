@@ -28,7 +28,7 @@ public class Folder extends Stuff {
      */
     public void addStuff(Stuff stuffToAdd) throws DuplicateItemException {
         for (Stuff stuff : childs) {
-            if (stuff.getName().equals(stuffToAdd.getName())) {
+            if (stuff.getName().equalsIgnoreCase(stuffToAdd.getName())) {
                 throw new DuplicateItemException(stuffToAdd.getName());
             }
         }
@@ -48,7 +48,7 @@ public class Folder extends Stuff {
 
     public Stuff getChild(String name) {
         for (Stuff stuff : childs) {
-            if (stuff.getName().equals(name)) {
+            if (stuff.getName().equalsIgnoreCase(name)) {
                 return stuff;
             }
         }
@@ -57,7 +57,7 @@ public class Folder extends Stuff {
 
     public void removeStuff(String name) {
         for (Stuff stuff : childs) {
-            if (stuff.getName().equals(name)) {
+            if (stuff.getName().equalsIgnoreCase(name)) {
                 childs.remove(stuff);
             }
         }

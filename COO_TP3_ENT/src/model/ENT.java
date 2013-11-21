@@ -6,6 +6,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import utils.BadArgumentException;
 import utils.UnauthorisedException;
 
 /**
@@ -49,23 +50,25 @@ public class ENT extends Observable {
         setChanged();
         notifyObservers("GROUP");
     }
+    /*
+     public Group getGroup(int index) {
+     return groups.get(index);
+     }
+     */
 
-    public Group getGroup(int index) {
-        return groups.get(index);
-    }
-
-    public Group getGroup(String name) {
+    public Group getGroup(String name) throws BadArgumentException{
         for (Group group : groups) {
             if (group.getName().equalsIgnoreCase(name)) {
                 return group;
             }
         }
-        return null;
+        throw new BadArgumentException("unknown group");
     }
 
     public User getConnectedUser() throws UnauthorisedException {
-        if (connectedUser == null)
-            throw  new UnauthorisedException("User not connected");
+        if (connectedUser == null) {
+            throw new UnauthorisedException("User not connected");
+        }
         return connectedUser;
     }
 
