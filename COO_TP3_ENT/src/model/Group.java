@@ -37,7 +37,7 @@ public class Group {
         this.owner = owner;
         users = new ArrayList<>();
         rootFolder = new Folder(name);
-        
+
     }
 
     /**
@@ -90,8 +90,6 @@ public class Group {
     public void setOwner(User owner) {
         this.owner = owner;
     }
-    
-    
 
     @Override
     public String toString() {
@@ -102,8 +100,17 @@ public class Group {
             toReturn += user.toString() + "\n";
         }
 
-         toReturn += "stuffs : \n" + rootFolder.toString();
-         
+        toReturn += "stuffs : \n" + rootFolder.toString();
+
         return toReturn + " \n\n ";
+    }
+
+    public static Group findGroupByName(ArrayList<Group> groups, String name) {
+        for (Group group : groups) {
+            if (group.getName().equalsIgnoreCase(name)) {
+                return group;
+            }
+        }
+        return null;
     }
 }

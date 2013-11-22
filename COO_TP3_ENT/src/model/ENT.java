@@ -56,7 +56,7 @@ public class ENT extends Observable {
      }
      */
 
-    public Group getGroup(String name) throws BadArgumentException{
+    public Group getGroup(String name) throws BadArgumentException {
         for (Group group : groups) {
             if (group.getName().equalsIgnoreCase(name)) {
                 return group;
@@ -90,5 +90,14 @@ public class ENT extends Observable {
 
     public void setRelationsNames(ArrayList<String> relationsNames) {
         this.relationsNames = relationsNames;
+    }
+
+    public boolean isAnExistingRelationName(String relationName) {
+        for (String name : relationsNames) {
+            if (name.equalsIgnoreCase(relationName)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

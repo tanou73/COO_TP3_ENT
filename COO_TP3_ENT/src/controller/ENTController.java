@@ -50,13 +50,11 @@ public class ENTController {
         if (name == null) {
             throw new BadArgumentException("Name is null");
         }
-        for (Group group : model.getGroups()) {
-            if (group.getName().equalsIgnoreCase(name)) {
-                throw new DuplicateItemException("group: " + name);
-            }
+        if (Group.findGroupByName(model.getGroups(), name) != null) {
+            throw new DuplicateItemException("group: " + name);
         }
-        Group grp = new Group(name, model.getConnectedUser());
-        model.addGroup(grp);
+        Group groupe = new Group(name, model.getConnectedUser());
+        model.addGroup(groupe);
         joinGroup(name);
     }
 
@@ -83,14 +81,14 @@ public class ENTController {
         return model.getConnectedUser().getUserGroups();
     }
 
-    public Group getUserGroup(String name) throws UnauthorisedException, BadArgumentException {
+    public Group getConnectedUserGroup(String name) throws UnauthorisedException, BadArgumentException {
         ArrayList<Group> grps = model.getConnectedUser().getUserGroups();
-        for (Group group : grps) {
-            if (group.getName().equalsIgnoreCase(name)) {
-                return group;
-            }
+        Group group = Group.findGroupByName(grps, name);
+        if (group == null) {
+            throw new BadArgumentException("group not found");
+        } else {
+            return group;
         }
-        throw new BadArgumentException("group not found");
     }
 
     public Folder createFolder(Group grp, Folder parent, String name) {
@@ -121,21 +119,42 @@ public class ENTController {
 
     }
 
-    public void addRelation(Stuff source, Stuff destination, String name) {
-        source.setRelation(new Relation(destination, name));
+    public void addRelation(Stuff source, Stuff destination, String relationName) throws BadArgumentException {
+        if (source == null || destination == null || relationName == null) {
+            throw new BadArgumentException("Arguments cant be null");
+        }
+        boolean validRelationname = false;
+        for (String name : model.getRelationsNames()) {
+            if (name.equalsIgnoreCase(relationName)) {
+                validRelationname = true;
+                break;
+            }
+        }
+        if (validRelationname) {
+            source.setRelation(destination, relationName);
+        } else {
+            throw new BadArgumentException("relation name not found");
+        }
     }
 
-    public void createRelationName(String name) throws UnauthorisedException {
+    public void createRelationName(String relationName) throws UnauthorisedException, DuplicateItemException {
         if (model.getConnectedUser() instanceof SuperUser) {
-            model.addRelationName(name);
+            if (model.isAnExistingRelationName(relationName)) {
+                throw new DuplicateItemException("Relation name already used");
+            }
+            model.addRelationName(relationName);
         } else {
             throw new UnauthorisedException("You must be super user");
         }
     }
 
-    public void removeRelationName(String name) throws UnauthorisedException {
+    public void removeRelationName(String name) throws UnauthorisedException, BadArgumentException {
         if (model.getConnectedUser() instanceof SuperUser) {
-            model.removeRelationName(name);
+            if (model.isAnExistingRelationName(name)) {
+                model.removeRelationName(name);
+            } else {
+                throw new BadArgumentException("relation name not found");
+            }
         } else {
             throw new UnauthorisedException("You must be super user");
         }

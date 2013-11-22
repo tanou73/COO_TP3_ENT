@@ -17,7 +17,7 @@ public class Folder extends Stuff {
      * childs *
      */
     protected ArrayList<Stuff> childs;
-
+    
     public Folder(String name) {
         super(name);
         this.childs = new ArrayList<>();
@@ -41,11 +41,23 @@ public class Folder extends Stuff {
      * (cause the remove methode set parent to null)
      *
      */
-    public void removeStuff(Stuff stuff) {
-        this.childs.remove(stuff);
-        stuff.setParent(null);
+    public void removeChild(Stuff child) {
+        this.childs.remove(child);
     }
-
+    
+    public void removeAllChildren() {
+        for (Stuff stuff : childs) {
+            if (stuff instanceof Folder) {
+                ((Folder) stuff).removeAllChildren();
+                if (stuff.getRelation() != null) {
+                    stuff.setRelation(null);
+                    stuff.getRelation().getRelatedStuff().setRelation(null);
+                }
+                childs.remove(stuff);
+            }
+        }
+    }
+    
     public Stuff getChild(String name) {
         for (Stuff stuff : childs) {
             if (stuff.getName().equalsIgnoreCase(name)) {
@@ -54,7 +66,7 @@ public class Folder extends Stuff {
         }
         return null;
     }
-
+    
     public void removeStuff(String name) {
         for (Stuff stuff : childs) {
             if (stuff.getName().equalsIgnoreCase(name)) {
@@ -69,26 +81,26 @@ public class Folder extends Stuff {
     public ArrayList<Stuff> getChilds() {
         return childs;
     }
-
+    
     public void setChilds(ArrayList<Stuff> childs) {
         this.childs = childs;
     }
-
+    
     @Override
     public String toString() {
         String ret = super.toString() + "\n -> Repository{";
-
+        
         if (super.getParent() != null) {
             ret += "parent=" + super.getParent().getName();
         } else {
             ret += "parent=root";
         }
-
+        
         ret += "childs : \n";
         for (Stuff stuff : childs) {
             ret += stuff.toString() + "\n";
         }
-
+        
         return ret + "\n\n";
     }
 }

@@ -53,7 +53,7 @@ public class GroupTest {
         
         entCtrl.createGroup(groupName);
         
-        Group grp = entCtrl.getUserGroup(groupName);        
+        Group grp = entCtrl.getConnectedUserGroup(groupName);        
         assertTrue(model.getGroups().contains(grp));
     }
     
@@ -98,7 +98,7 @@ public class GroupTest {
         
         entCtrl.joinGroup(groupName);
         
-        Group grp = entCtrl.getUserGroup(groupName);   
+        Group grp = entCtrl.getConnectedUserGroup(groupName);   
         assertTrue(grp.getUsers().contains(bob));
         assertTrue(grp.getUsers().contains(morane));
         
@@ -120,7 +120,7 @@ public class GroupTest {
         
         entCtrl.joinGroup(groupName);
         
-        Group grp = entCtrl.getUserGroup(groupName);  
+        Group grp = entCtrl.getConnectedUserGroup(groupName);  
         
         entCtrl.quitGroup(groupName);        
         
@@ -142,7 +142,7 @@ public class GroupTest {
         
         entCtrl.joinGroup(groupName);
         
-        Group grp = entCtrl.getUserGroup(groupName);  
+        Group grp = entCtrl.getConnectedUserGroup(groupName);  
         
         entCtrl.connectUser(bob);
         
@@ -167,7 +167,7 @@ public class GroupTest {
         
         entCtrl.joinGroup(groupName);
         
-        Group grp = entCtrl.getUserGroup(groupName);  
+        Group grp = entCtrl.getConnectedUserGroup(groupName);  
         
         entCtrl.removeGroup(groupName);
     }

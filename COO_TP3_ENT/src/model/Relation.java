@@ -4,26 +4,28 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author maxime
  */
 public class Relation {
-    
-    private Stuff stuff;
+
+    private Stuff relatedStuff;
     private String name;
 
     public Relation(Stuff stuff, String name) {
-        this.stuff = stuff;
+        this.relatedStuff = stuff;
         this.name = name;
     }
 
-    public Stuff getStuff() {
-        return stuff;
+    public Stuff getRelatedStuff() {
+        return relatedStuff;
     }
 
-    public void setStuff(Stuff stuff) {
-        this.stuff = stuff;
+    public void setRelatedStuff(Stuff stuff) {
+        this.relatedStuff = stuff;
     }
 
     public String getName() {
@@ -34,5 +36,5 @@ public class Relation {
         this.name = name;
     }
 
-    
+
 }
