@@ -14,6 +14,7 @@ public class Relation {
 
     private Stuff relatedStuff;
     private String name;
+    private Relation invert;
 
     public Relation(Stuff stuff, String name) {
         this.relatedStuff = stuff;
@@ -36,5 +37,11 @@ public class Relation {
         this.name = name;
     }
 
+    public Relation getInvert() {
+        return invert;
+    }
 
+    public void setInvert(Relation invert) {
+        this.invert = invert;
+    }
 }

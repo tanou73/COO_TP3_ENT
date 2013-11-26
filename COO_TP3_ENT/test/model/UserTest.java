@@ -5,8 +5,6 @@ package model;
  * and open the template in the editor.
  */
 import controller.ENTController;
-import model.ENT;
-import model.User;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

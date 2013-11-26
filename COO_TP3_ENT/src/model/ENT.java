@@ -17,21 +17,21 @@ public class ENT extends Observable {
 
     private ArrayList<Group> groups;
     private User connectedUser;
-    private ArrayList<String> relationsNames;
+    private ArrayList<RelationType> relationTypes;
 
     public ENT() {
         this.groups = new ArrayList<>();
-        this.relationsNames = new ArrayList<>();
+        this.relationTypes = new ArrayList<>();
     }
 
-    public void addRelationName(String name) {
-        relationsNames.add(name);
+    public void addRelationName(String name, String invert) {
+        relationTypes.add(new RelationType(name, invert));
     }
 
     public void removeRelationName(String name) {
-        for (String relation : relationsNames) {
-            if (relation.equals(name)) {
-                relationsNames.remove(name);
+        for (RelationType relType : relationTypes) {
+            if (relType.getName().equals(name)) {
+                relationTypes.remove(relType);
             }
         }
     }
@@ -84,17 +84,17 @@ public class ENT extends Observable {
         this.groups = groups;
     }
 
-    public ArrayList<String> getRelationsNames() {
-        return relationsNames;
+    public ArrayList<RelationType> getRelationTypes() {
+        return relationTypes;
     }
 
-    public void setRelationsNames(ArrayList<String> relationsNames) {
-        this.relationsNames = relationsNames;
+    public void setRelationTypes(ArrayList<RelationType> relationTypes) {
+        this.relationTypes = relationTypes;
     }
 
     public boolean isAnExistingRelationName(String relationName) {
-        for (String name : relationsNames) {
-            if (name.equalsIgnoreCase(relationName)) {
+        for (RelationType relType : relationTypes) {
+            if (relType.getName().equalsIgnoreCase(relationName)) {
                 return true;
             }
         }

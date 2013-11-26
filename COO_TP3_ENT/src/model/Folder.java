@@ -5,6 +5,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import utils.DuplicateItemException;
 
 /**
@@ -45,15 +46,17 @@ public class Folder extends Stuff {
         this.childs.remove(child);
     }
     
-    public void removeAllChildren() {
-        for (Stuff stuff : childs) {
+    public synchronized void removeAllChildren() {
+        for (Iterator<Stuff> it = childs.iterator(); it.hasNext();) {
+            Stuff stuff = it.next();
+            
             if (stuff instanceof Folder) {
                 ((Folder) stuff).removeAllChildren();
                 if (stuff.getRelation() != null) {
                     stuff.setRelation(null);
                     stuff.getRelation().getRelatedStuff().setRelation(null);
                 }
-                childs.remove(stuff);
+                it.remove();
             }
         }
     }

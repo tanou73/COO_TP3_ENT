@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import model.Group;
 import model.ENT;
 import model.Folder;
-import model.Relation;
 import model.Stuff;
 import model.SuperUser;
 import model.User;
@@ -91,18 +90,43 @@ public class ENTController {
         }
     }
 
-    public Folder createFolder(Group grp, Folder parent, String name) {
+    public Folder createFolder(Group grp, Folder parent, String name) throws DuplicateItemException {
         Folder folder = new Folder(name);
-        try {
-            if (parent == null) {
-                grp.getRootFolder().addStuff(folder);
-            } else {
-                parent.addStuff(folder);
-            }
-            return folder;
-        } catch (DuplicateItemException ex) {
-            Logger.getLogger(ENTController.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+        if (parent == null) {
+            grp.getRootFolder().addStuff(folder);
+        } else {
+            parent.addStuff(folder);
+        }
+        return folder;
+    }
+    
+    public Folder getRootFolder(Group grp) throws BadArgumentException {
+        if (grp != null)
+            return grp.getRootFolder();
+        else
+            throw new BadArgumentException("group is null");
+    }
+    
+    public void removeStuff(Folder parent, String name) throws BadArgumentException {
+        if (parent == null)
+            throw new BadArgumentException("folder parent is null");
+        
+        Stuff target = parent.getChild(name);        
+        if (target == null)
+            throw new BadArgumentException("stuff name is null");
+        
+        parent.removeChild(target);
+        
+        if (target instanceof Folder){
+            ((Folder)target).removeAllChildren();
+        }
+    }
+
+    public Stuff getStuff(Group grp, Folder parent, String name) {
+        if (parent == null) {
+            return grp.getRootFolder().getChild(name);
+        } else {
+            return parent.getChild(name);
         }
     }
 
@@ -120,9 +144,12 @@ public class ENTController {
     }
 
     public void addRelation(Stuff source, Stuff destination, String relationName) throws BadArgumentException {
+        // Check args
         if (source == null || destination == null || relationName == null) {
             throw new BadArgumentException("Arguments cant be null");
         }
+        
+        // Check that the relation name exists
         boolean validRelationname = false;
         for (String name : model.getRelationsNames()) {
             if (name.equalsIgnoreCase(relationName)) {
@@ -130,6 +157,8 @@ public class ENTController {
                 break;
             }
         }
+        
+        // Add relation
         if (validRelationname) {
             source.setRelation(destination, relationName);
         } else {
@@ -137,12 +166,12 @@ public class ENTController {
         }
     }
 
-    public void createRelationName(String relationName) throws UnauthorisedException, DuplicateItemException {
+    public void createRelationName(String relationName, String invertName) throws UnauthorisedException, DuplicateItemException {
         if (model.getConnectedUser() instanceof SuperUser) {
             if (model.isAnExistingRelationName(relationName)) {
                 throw new DuplicateItemException("Relation name already used");
             }
-            model.addRelationName(relationName);
+            model.addRelationName(relationName, invertName);
         } else {
             throw new UnauthorisedException("You must be super user");
         }
