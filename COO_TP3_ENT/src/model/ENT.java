@@ -23,6 +23,7 @@ public class ENT extends Observable {
     public ENT() {
         this.groups = new ArrayList<>();
         this.relationTypes = new ArrayList<>();
+        this.categories = new ArrayList<>();
     }
 
     public void addRelationType(RelationType rel) {
@@ -121,5 +122,14 @@ public class ENT extends Observable {
                 categories.remove(cat);
             }
         }
+    }
+    
+    public Category getCategory(String name) throws BadArgumentException{
+        for (Category cat : categories) {
+            if (cat.getName().equalsIgnoreCase(name)) {
+                return cat;
+            }
+        }
+        throw new BadArgumentException("unknown category");
     }
 }
