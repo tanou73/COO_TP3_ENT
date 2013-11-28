@@ -10,6 +10,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 import utils.BadArgumentException;
 import utils.DuplicateItemException;
 import utils.UnauthorisedException;
@@ -77,12 +78,22 @@ public class StuffTest {
     }
 
     @Test
-    public void createStuffs() throws BadArgumentException, UnauthorisedException, DuplicateItemException {
+    public void createCategories() throws BadArgumentException, UnauthorisedException, DuplicateItemException {
         SuperUser su = new SuperUser("michel");
         entCtrl.connectUser(su);
         entCtrl.createCategory("Enonce");
         entCtrl.createCategory("Correction");
-        model.getCategory("Enonce");
-        model.getCategory("Correction");
+        assertTrue(model.isAnExistingCategory("Enonce"));
+        assertTrue(model.isAnExistingCategory("Correction"));
+    }
+
+    @Test
+    public void createStuffs() throws BadArgumentException {
+        Document doc = new Document(5, "", "", "doc");
+        Service service = new Service("service");
+        entCtrl.addStuff(entCtrl.getRootFolder(grp), doc);
+        entCtrl.addStuff(entCtrl.getRootFolder(grp), service);
+        assertNotNull(entCtrl.getRootFolder(grp).getChild("service"));
+        assertNotNull(entCtrl.getRootFolder(grp).getChild("doc"));
     }
 }
