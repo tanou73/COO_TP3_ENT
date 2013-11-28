@@ -208,4 +208,8 @@ public class ENTController {
             throw new UnauthorisedException("You must be super user");
         }
     }
+    
+    public Category getCategory(String name) throws BadArgumentException{
+        return model.getCategory(name);
+    }
 }
