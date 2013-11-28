@@ -13,12 +13,17 @@ import java.util.ArrayList;
 public class Relation {
 
     private Stuff relatedStuff;
-    private String name;
-    private Relation invert;
+    private RelationType rel;
+    private boolean inverted;
 
-    public Relation(Stuff stuff, String name) {
+    public Relation(Stuff stuff, RelationType rel, boolean isInverted) {
         this.relatedStuff = stuff;
-        this.name = name;
+        this.rel = rel;
+        this.inverted = isInverted;
+    }
+    
+    public String getLibelle(){
+        return rel.getLibelle(inverted);
     }
 
     public Stuff getRelatedStuff() {
@@ -29,19 +34,19 @@ public class Relation {
         this.relatedStuff = stuff;
     }
 
-    public String getName() {
-        return name;
+    public RelationType getRel() {
+        return rel;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRel(RelationType rel) {
+        this.rel = rel;
     }
 
-    public Relation getInvert() {
-        return invert;
+    public boolean isInverted() {
+        return inverted;
     }
 
-    public void setInvert(Relation invert) {
-        this.invert = invert;
+    public void setInverted(boolean isInverted) {
+        this.inverted = isInverted;
     }
 }

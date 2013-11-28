@@ -8,25 +8,18 @@ package model;
  *
  * @author hugo
  */
-public class Service extends Stuff {
+public class Category {
+    private String name;
 
-    public Service(String name, Category cat) {
-        super(name);
-        super.setCat(cat);
+    public Category(String name) {
+        this.name = name;
     }
 
-    public Service(String name) {
-        super(name);
-    }
-
-    /**
-     * Getters & Setters *
-     */
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
+    }    
 }

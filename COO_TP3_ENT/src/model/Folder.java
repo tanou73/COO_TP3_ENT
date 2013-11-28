@@ -18,7 +18,13 @@ public class Folder extends Stuff {
      * childs *
      */
     protected ArrayList<Stuff> childs;
-    
+
+    public Folder(String name, Category cat) {
+        super(name);
+        super.setCat(cat);
+        this.childs = new ArrayList<>();
+    }
+
     public Folder(String name) {
         super(name);
         this.childs = new ArrayList<>();
@@ -45,11 +51,11 @@ public class Folder extends Stuff {
     public void removeChild(Stuff child) {
         this.childs.remove(child);
     }
-    
+
     public synchronized void removeAllChildren() {
         for (Iterator<Stuff> it = childs.iterator(); it.hasNext();) {
             Stuff stuff = it.next();
-            
+
             if (stuff instanceof Folder) {
                 ((Folder) stuff).removeAllChildren();
                 if (stuff.getRelation() != null) {
@@ -60,7 +66,7 @@ public class Folder extends Stuff {
             }
         }
     }
-    
+
     public Stuff getChild(String name) {
         for (Stuff stuff : childs) {
             if (stuff.getName().equalsIgnoreCase(name)) {
@@ -69,7 +75,7 @@ public class Folder extends Stuff {
         }
         return null;
     }
-    
+
     public void removeStuff(String name) {
         for (Stuff stuff : childs) {
             if (stuff.getName().equalsIgnoreCase(name)) {
@@ -84,26 +90,26 @@ public class Folder extends Stuff {
     public ArrayList<Stuff> getChilds() {
         return childs;
     }
-    
+
     public void setChilds(ArrayList<Stuff> childs) {
         this.childs = childs;
     }
-    
+
     @Override
     public String toString() {
         String ret = super.toString() + "\n -> Repository{";
-        
+
         if (super.getParent() != null) {
             ret += "parent=" + super.getParent().getName();
         } else {
             ret += "parent=root";
         }
-        
+
         ret += "childs : \n";
         for (Stuff stuff : childs) {
             ret += stuff.toString() + "\n";
         }
-        
+
         return ret + "\n\n";
     }
 }

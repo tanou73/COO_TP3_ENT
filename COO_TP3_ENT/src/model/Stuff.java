@@ -11,11 +11,12 @@ package model;
 public abstract class Stuff {
 
     protected String name;
-    /**
-     * parent folder ( null if root ) *
-     */
+    /** parent folder ( null if root ) **/
     protected Folder parent;
+    /** relation **/
     protected Relation relation;
+    /** category **/
+    protected Category cat;
 
     public Stuff(String name) {
         this.name = name;
@@ -39,7 +40,7 @@ public abstract class Stuff {
 
     @Override
     public String toString() {
-        return "\n -- STUFFS -- \n " + "name=" + name + ((relation != null) ? " " + relation.getName() + " " + relation.getRelatedStuff().getName() : "");
+        return "\n -- STUFFS -- \n " + "name=" + name + ((relation != null) ? " " + relation.getLibelle() + " " + relation.getRelatedStuff().getName() : "");
     }
 
     public Relation getRelation() {
@@ -50,7 +51,15 @@ public abstract class Stuff {
         this.relation = relation;
     }
 
-    public void setRelation(Stuff relatedStuff, String name) {
-        this.relation = new Relation(relatedStuff, name);
+    public void setRelation(Stuff relatedStuff, RelationType rel, boolean isInverted) {
+        this.relation = new Relation(relatedStuff, rel, isInverted);
+    }
+
+    public Category getCat() {
+        return cat;
+    }
+
+    public void setCat(Category cat) {
+        this.cat = cat;
     }
 }

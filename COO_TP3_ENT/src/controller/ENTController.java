@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Category;
 import model.Group;
 import model.ENT;
 import model.Folder;
+import model.RelationType;
 import model.Stuff;
 import model.SuperUser;
 import model.User;
@@ -90,8 +92,8 @@ public class ENTController {
         }
     }
 
-    public Folder createFolder(Group grp, Folder parent, String name) throws DuplicateItemException {
-        Folder folder = new Folder(name);
+    public Folder createFolder(Group grp, Folder parent, String name, Category cat) throws DuplicateItemException {
+        Folder folder = new Folder(name, cat);
         if (parent == null) {
             grp.getRootFolder().addStuff(folder);
         } else {
@@ -99,26 +101,29 @@ public class ENTController {
         }
         return folder;
     }
-    
+
     public Folder getRootFolder(Group grp) throws BadArgumentException {
-        if (grp != null)
+        if (grp != null) {
             return grp.getRootFolder();
-        else
+        } else {
             throw new BadArgumentException("group is null");
+        }
     }
-    
+
     public void removeStuff(Folder parent, String name) throws BadArgumentException {
-        if (parent == null)
+        if (parent == null) {
             throw new BadArgumentException("folder parent is null");
-        
-        Stuff target = parent.getChild(name);        
-        if (target == null)
+        }
+
+        Stuff target = parent.getChild(name);
+        if (target == null) {
             throw new BadArgumentException("stuff name is null");
-        
+        }
+
         parent.removeChild(target);
-        
-        if (target instanceof Folder){
-            ((Folder)target).removeAllChildren();
+
+        if (target instanceof Folder) {
+            ((Folder) target).removeAllChildren();
         }
     }
 
@@ -140,7 +145,6 @@ public class ENTController {
         } else {
             throw new BadArgumentException();
         }
-
     }
 
     public void addRelation(Stuff source, Stuff destination, String relationName) throws BadArgumentException {
@@ -148,30 +152,34 @@ public class ENTController {
         if (source == null || destination == null || relationName == null) {
             throw new BadArgumentException("Arguments cant be null");
         }
-        
-        // Check that the relation name exists
-        boolean validRelationname = false;
-        for (String name : model.getRelationsNames()) {
-            if (name.equalsIgnoreCase(relationName)) {
-                validRelationname = true;
+
+        // Check that the relation exists and get it
+        RelationType relSelected = null;
+        for (RelationType rel : model.getRelationTypes()) {
+            if (rel.getName().equalsIgnoreCase(relationName)) {
+                relSelected = rel;
                 break;
             }
         }
-        
+
         // Add relation
-        if (validRelationname) {
-            source.setRelation(destination, relationName);
+        if (relSelected != null) {
+            if (relSelected.isCompatible(source, destination)) {
+                source.setRelation(destination, relSelected, false);
+                destination.setRelation(source, relSelected, true);
+            }
         } else {
             throw new BadArgumentException("relation name not found");
         }
     }
 
-    public void createRelationName(String relationName, String invertName) throws UnauthorisedException, DuplicateItemException {
+    public void createRelationType(String relationName, String invertName, Category catSource, Category catDest) throws UnauthorisedException, DuplicateItemException {
         if (model.getConnectedUser() instanceof SuperUser) {
-            if (model.isAnExistingRelationName(relationName)) {
+            if (model.isAnExistingRelationType(relationName)) {
                 throw new DuplicateItemException("Relation name already used");
             }
-            model.addRelationName(relationName, invertName);
+            RelationType rel = new RelationType(invertName, invertName, catSource, catDest);
+            model.addRelationType(rel);
         } else {
             throw new UnauthorisedException("You must be super user");
         }
@@ -179,11 +187,23 @@ public class ENTController {
 
     public void removeRelationName(String name) throws UnauthorisedException, BadArgumentException {
         if (model.getConnectedUser() instanceof SuperUser) {
-            if (model.isAnExistingRelationName(name)) {
-                model.removeRelationName(name);
+            if (model.isAnExistingRelationType(name)) {
+                model.removeRelationType(name);
             } else {
                 throw new BadArgumentException("relation name not found");
             }
+        } else {
+            throw new UnauthorisedException("You must be super user");
+        }
+    }
+
+    public void createCategory(String name) throws UnauthorisedException, DuplicateItemException {
+        if (model.getConnectedUser() instanceof SuperUser) {
+            if (model.isAnExistingCategory(name)) {
+                throw new DuplicateItemException("Category name already used");
+            }
+            Category cat = new Category(name);
+            model.addCategory(cat);
         } else {
             throw new UnauthorisedException("You must be super user");
         }

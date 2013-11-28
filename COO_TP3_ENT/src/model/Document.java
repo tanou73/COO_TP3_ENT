@@ -8,13 +8,28 @@ package model;
  *
  * @author hugo
  */
-public class Document extends Stuff{
-    /** document's size **/
+public class Document extends Stuff {
+
+    /**
+     * document's size *
+     */
     private long size;
-    /** description **/
+    /**
+     * description *
+     */
     private String desc;
-    /** link to the file **/
+    /**
+     * link to the file *
+     */
     private String link;
+
+    public Document(long size, String desc, String link, String name, Category category) {
+        super(name);
+        super.setCat(cat);
+        this.size = size;
+        this.desc = desc;
+        this.link = link;
+    }
 
     public Document(long size, String desc, String link, String name) {
         super(name);
@@ -22,8 +37,10 @@ public class Document extends Stuff{
         this.desc = desc;
         this.link = link;
     }
-    
-    /** Getters & Setters **/
+
+    /**
+     * Getters & Setters *
+     */
     public long getSize() {
         return size;
     }

@@ -60,34 +60,34 @@ public class FolderTest {
    
     @Test
     public void createFolder() throws DuplicateItemException {
-        entCtrl.createFolder(grp, null, "documents");
+        entCtrl.createFolder(grp, null, "documents", null);
         
         Folder doc = (Folder)entCtrl.getStuff(grp, null, "documents");
         
         assertTrue(doc != null);
         
-        entCtrl.createFolder(grp, doc, "images");
+        entCtrl.createFolder(grp, doc, "images", null);
         
         assertTrue(entCtrl.getStuff(grp, doc, "images") != null);
     }
     
     @Test(expected = DuplicateItemException.class)
     public void createFolderDuplicate() throws DuplicateItemException {
-        entCtrl.createFolder(grp, null, "documents");
+        entCtrl.createFolder(grp, null, "documents", null);
         
-        entCtrl.createFolder(grp, null, "documents");
+        entCtrl.createFolder(grp, null, "documents", null);
     }
     
     @Test
     public void removeFolder() throws Exception {
         // Creer folder document
-        entCtrl.createFolder(grp, null, "documents");
+        entCtrl.createFolder(grp, null, "documents", null);
         Folder fold = (Folder)entCtrl.getStuff(grp, null, "documents");
         // Creer un document "TOTO" dans le folder
         Document doc = new Document(15, "un doc", "/toto/lol.jpg", "toto.jpg");        
         entCtrl.addStuff(fold, doc);
         // Creer un folder dans le folder documents
-        entCtrl.createFolder(grp, fold, "images");
+        entCtrl.createFolder(grp, fold, "images", null);
         Folder img = (Folder)entCtrl.getStuff(grp, fold, "images");        
         // Creer un service dans folder images
         Service serv = new Service("un service");

@@ -36,7 +36,7 @@ public class Group {
         this.name = name;
         this.owner = owner;
         users = new ArrayList<>();
-        rootFolder = new Folder(name);
+        rootFolder = new Folder(name, null);
 
     }
 

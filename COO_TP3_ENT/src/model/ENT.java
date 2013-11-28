@@ -18,17 +18,18 @@ public class ENT extends Observable {
     private ArrayList<Group> groups;
     private User connectedUser;
     private ArrayList<RelationType> relationTypes;
+    private ArrayList<Category> categories;
 
     public ENT() {
         this.groups = new ArrayList<>();
         this.relationTypes = new ArrayList<>();
     }
 
-    public void addRelationName(String name, String invert) {
-        relationTypes.add(new RelationType(name, invert));
+    public void addRelationType(RelationType rel) {
+        relationTypes.add(rel);
     }
 
-    public void removeRelationName(String name) {
+    public void removeRelationType(String name) {
         for (RelationType relType : relationTypes) {
             if (relType.getName().equals(name)) {
                 relationTypes.remove(relType);
@@ -92,12 +93,33 @@ public class ENT extends Observable {
         this.relationTypes = relationTypes;
     }
 
-    public boolean isAnExistingRelationName(String relationName) {
+    public boolean isAnExistingRelationType(String relationName) {
         for (RelationType relType : relationTypes) {
             if (relType.getName().equalsIgnoreCase(relationName)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean isAnExistingCategory(String name) {
+        for (Category cat : categories) {
+            if (cat.getName().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean addCategory(Category cat) {
+        return categories.add(cat);
+    }
+
+    public void removeCategory(String name) {
+        for (Category cat : categories) {
+            if (cat.getName().equalsIgnoreCase(name)) {
+                categories.remove(cat);
+            }
+        }
     }
 }
