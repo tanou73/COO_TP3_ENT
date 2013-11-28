@@ -25,7 +25,7 @@ public class Document extends Stuff {
 
     public Document(long size, String desc, String link, String name, Category category) {
         super(name);
-        super.setCat(cat);
+        this.cat = category;
         this.size = size;
         this.desc = desc;
         this.link = link;
@@ -63,14 +63,6 @@ public class Document extends Stuff {
 
     public void setLink(String link) {
         this.link = link;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

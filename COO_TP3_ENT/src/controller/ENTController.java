@@ -167,6 +167,8 @@ public class ENTController {
             if (relSelected.isCompatible(source, destination)) {
                 source.setRelation(destination, relSelected, false);
                 destination.setRelation(source, relSelected, true);
+            } else {
+                throw new BadArgumentException("Incompatible categories of source or destination");
             }
         } else {
             throw new BadArgumentException("relation name not found");
@@ -178,7 +180,7 @@ public class ENTController {
             if (model.isAnExistingRelationType(relationName)) {
                 throw new DuplicateItemException("Relation name already used");
             }
-            RelationType rel = new RelationType(invertName, invertName, catSource, catDest);
+            RelationType rel = new RelationType(relationName, invertName, catSource, catDest);
             model.addRelationType(rel);
         } else {
             throw new UnauthorisedException("You must be super user");

@@ -5,6 +5,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Observable;
 import utils.BadArgumentException;
 import utils.UnauthorisedException;
@@ -30,10 +31,11 @@ public class ENT extends Observable {
         relationTypes.add(rel);
     }
 
-    public void removeRelationType(String name) {
-        for (RelationType relType : relationTypes) {
-            if (relType.getName().equals(name)) {
-                relationTypes.remove(relType);
+    public void removeRelationType(String name) {        
+        for (Iterator<RelationType> it = relationTypes.iterator(); it.hasNext();) {
+            RelationType rel = it.next();
+            if (rel.getName().equals(name)) {
+                it.remove();
             }
         }
     }
