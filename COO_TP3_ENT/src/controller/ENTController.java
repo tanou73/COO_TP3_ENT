@@ -185,7 +185,7 @@ public class ENTController {
         }
     }
 
-    public void removeRelationName(String name) throws UnauthorisedException, BadArgumentException {
+    public void removeRelationType(String name) throws UnauthorisedException, BadArgumentException {
         if (model.getConnectedUser() instanceof SuperUser) {
             if (model.isAnExistingRelationType(name)) {
                 model.removeRelationType(name);
