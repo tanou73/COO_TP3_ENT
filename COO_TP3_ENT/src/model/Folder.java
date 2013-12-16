@@ -29,6 +29,21 @@ public class Folder extends Stuff {
         super(name);
         this.childs = new ArrayList<>();
     }
+    
+    /**
+     * clone constructor
+     */
+    public static Folder clone(Folder folder) throws DuplicateItemException {
+        Folder foldToRet = new Folder(folder.getName(), folder.getCat());
+        
+        for (Stuff stuff : folder.getChilds()) {
+            if (stuff instanceof Folder) {
+                foldToRet.addStuff(Folder.clone((Folder)stuff));
+            }
+        }
+        
+        return foldToRet;
+    }
 
     /**
      * add some stuff in the repo *

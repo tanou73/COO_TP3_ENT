@@ -30,7 +30,7 @@ public class Group {
     protected User owner;
 
     /**
-     * Constructor *
+     * Normal Constructor 
      */
     public Group(String name, User owner) {
         this.name = name;
@@ -38,6 +38,15 @@ public class Group {
         users = new ArrayList<>();
         rootFolder = new Folder(name, null);
 
+    }
+    
+    /**
+     * Clone constructor
+     */
+    public static Group clone (Group grp){
+        Group grpReturn = new Group(grp.name, grp.owner);
+        
+        return grpReturn;
     }
 
     /**
