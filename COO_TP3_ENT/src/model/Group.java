@@ -43,10 +43,9 @@ public class Group {
     /**
      * Clone constructor
      */
-    public static Group clone (Group grp){
-        Group grpReturn = new Group(grp.name, grp.owner);
-        
-        return grpReturn;
+    public Group(Group grp){
+        this(grp.name, grp.owner);
+        this.rootFolder = (new Folder(grp.getRootFolder()));
     }
 
     /**

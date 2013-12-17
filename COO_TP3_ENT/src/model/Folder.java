@@ -29,20 +29,20 @@ public class Folder extends Stuff {
         super(name);
         this.childs = new ArrayList<>();
     }
-    
+
     /**
      * clone constructor
      */
-    public static Folder clone(Folder folder) throws DuplicateItemException {
-        Folder foldToRet = new Folder(folder.getName(), folder.getCat());
-        
+    public Folder(Folder folder) {
+        //Folder foldToRet = new Folder(folder.getName(), folder.getCat());
+        this(folder.getName());
+        this.cat = folder.getCat();
         for (Stuff stuff : folder.getChilds()) {
             if (stuff instanceof Folder) {
-                foldToRet.addStuff(Folder.clone((Folder)stuff));
+                this.childs.add(new Folder((Folder) stuff));
             }
         }
-        
-        return foldToRet;
+
     }
 
     /**
