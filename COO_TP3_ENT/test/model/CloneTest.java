@@ -66,8 +66,12 @@ public class CloneTest {
         entCtrl.addStuff(entCtrl.getRootFolder(grp), doc);
         entCtrl.addStuff(entCtrl.getRootFolder(grp), service);
 
-        Group copiedGroup = new Group(grp);
-
+        //ajout du group à l'ent existant:
+        Group copiedGroup = entCtrl.cloneGroup("copy", grp);
+        assertEquals("copy", copiedGroup.getName());
+        //les références doivent être différentes car c'est une copie:
+        assertFalse(grp.getRootFolder() == copiedGroup.getRootFolder());
+        
         //only folders
         if (!onlyHaveFoldersAsChildren(copiedGroup.getRootFolder())) {
             fail("Only folders should be copied");
@@ -80,6 +84,8 @@ public class CloneTest {
         //copied folder 2
         Folder copiedVacancesFolder = (Folder) entCtrl.getStuff(grp, copiedImageFolder, "vacances");
         assertNotNull(copiedVacancesFolder);
+        
+
     }
 
     private boolean onlyHaveFoldersAsChildren(Folder folder) {

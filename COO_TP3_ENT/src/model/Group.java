@@ -45,7 +45,7 @@ public class Group {
      */
     public Group(Group grp) {
         this(grp.name, grp.owner);
-        this.rootFolder = (new Folder(grp.getRootFolder()));
+        this.rootFolder = new Folder(grp.getRootFolder());
     }
 
     /**

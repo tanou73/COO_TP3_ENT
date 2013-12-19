@@ -47,16 +47,24 @@ public class ENTController {
         model.setConnectedUser(null);
     }
 
-    public void createGroup(String name) throws UnauthorisedException, DuplicateItemException, BadArgumentException {
+    public Group createGroup(String name) throws UnauthorisedException, DuplicateItemException, BadArgumentException {
         if (name == null) {
             throw new BadArgumentException("Name is null");
         }
         if (Group.findGroupByName(model.getGroups(), name) != null) {
             throw new DuplicateItemException("group: " + name);
         }
-        Group groupe = new Group(name, model.getConnectedUser());
-        model.addGroup(groupe);
+        Group group = new Group(name, model.getConnectedUser());
+        model.addGroup(group);
         joinGroup(name);
+        return group;
+    }
+
+    public Group cloneGroup(String newName, Group group) {
+        Group copiedGroup = new Group(group);
+        copiedGroup.setName(newName);
+        model.addGroup(copiedGroup);
+        return copiedGroup;
     }
 
     public void joinGroup(String grpName) throws UnauthorisedException, BadArgumentException {

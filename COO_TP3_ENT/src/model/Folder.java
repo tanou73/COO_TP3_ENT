@@ -34,7 +34,6 @@ public class Folder extends Stuff {
      * clone constructor
      */
     public Folder(Folder folder) {
-        //Folder foldToRet = new Folder(folder.getName(), folder.getCat());
         this(folder.getName());
         this.cat = folder.getCat();
         for (Stuff stuff : folder.getChilds()) {
@@ -42,7 +41,6 @@ public class Folder extends Stuff {
                 this.childs.add(new Folder((Folder) stuff));
             }
         }
-
     }
 
     /**
