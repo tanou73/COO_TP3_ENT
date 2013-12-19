@@ -7,8 +7,8 @@ package model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
-import utils.BadArgumentException;
-import utils.UnauthorisedException;
+import exception.BadArgumentException;
+import exception.UnauthorisedException;
 
 /**
  *
@@ -31,7 +31,7 @@ public class ENT extends Observable {
         relationTypes.add(rel);
     }
 
-    public void removeRelationType(String name) {        
+    public void removeRelationType(String name) {
         for (Iterator<RelationType> it = relationTypes.iterator(); it.hasNext();) {
             RelationType rel = it.next();
             if (rel.getName().equals(name)) {
@@ -125,8 +125,8 @@ public class ENT extends Observable {
             }
         }
     }
-    
-    public Category getCategory(String name) throws BadArgumentException{
+
+    public Category getCategory(String name) throws BadArgumentException {
         for (Category cat : categories) {
             if (cat.getName().equalsIgnoreCase(name)) {
                 return cat;

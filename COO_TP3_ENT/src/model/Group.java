@@ -30,7 +30,7 @@ public class Group {
     protected User owner;
 
     /**
-     * Normal Constructor 
+     * Normal Constructor
      */
     public Group(String name, User owner) {
         this.name = name;
@@ -39,11 +39,11 @@ public class Group {
         rootFolder = new Folder(name, null);
 
     }
-    
+
     /**
      * Clone constructor
      */
-    public Group(Group grp){
+    public Group(Group grp) {
         this(grp.name, grp.owner);
         this.rootFolder = (new Folder(grp.getRootFolder()));
     }

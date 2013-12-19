@@ -11,9 +11,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import utils.BadArgumentException;
-import utils.DuplicateItemException;
-import utils.UnauthorisedException;
+import exception.BadArgumentException;
+import exception.DuplicateItemException;
+import exception.UnauthorisedException;
 
 /**
  *
@@ -62,7 +62,7 @@ public class RelationTest {
 
         catEnnonce = entCtrl.getCategory("ennonce");
         catCorrection = entCtrl.getCategory("correction");
-        
+
         docEnnonce = new Document(15, "ennonce tp", "/lol/toto", "ennonceTP.doc", catEnnonce);
         docCorrection = new Document(15, "correction tp", "/lol/toto", "correctionTP.doc", catCorrection);
     }
@@ -108,7 +108,7 @@ public class RelationTest {
         String relationNameInvert = "a pour correction";
         entCtrl.connectUser(bob);
         entCtrl.createRelationType(relationName, relationNameInvert, catCorrection, catEnnonce);
-        
+
         entCtrl.addRelation(docCorrection, docEnnonce, relationName);
         assertTrue(docCorrection.getRelation().getLibelle().equals(relationName));
         assertTrue(docCorrection.getRelation().getRelatedStuff().equals(docEnnonce));

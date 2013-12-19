@@ -11,9 +11,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import utils.BadArgumentException;
-import utils.DuplicateItemException;
-import utils.UnauthorisedException;
+import exception.BadArgumentException;
+import exception.DuplicateItemException;
+import exception.UnauthorisedException;
 
 /**
  *

@@ -16,9 +16,9 @@ import model.RelationType;
 import model.Stuff;
 import model.SuperUser;
 import model.User;
-import utils.BadArgumentException;
-import utils.DuplicateItemException;
-import utils.UnauthorisedException;
+import exception.BadArgumentException;
+import exception.DuplicateItemException;
+import exception.UnauthorisedException;
 
 /**
  *
@@ -210,8 +210,8 @@ public class ENTController {
             throw new UnauthorisedException("You must be super user");
         }
     }
-    
-    public Category getCategory(String name) throws BadArgumentException{
+
+    public Category getCategory(String name) throws BadArgumentException {
         return model.getCategory(name);
     }
 }

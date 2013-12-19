@@ -21,8 +21,8 @@ public class Relation {
         this.rel = rel;
         this.inverted = isInverted;
     }
-    
-    public String getLibelle(){
+
+    public String getLibelle() {
         return rel.getLibelle(inverted);
     }
 

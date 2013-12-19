@@ -11,11 +11,17 @@ package model;
 public abstract class Stuff {
 
     protected String name;
-    /** parent folder ( null if root ) **/
+    /**
+     * parent folder ( null if root ) *
+     */
     protected Folder parent;
-    /** relation **/
+    /**
+     * relation *
+     */
     protected Relation relation;
-    /** category **/
+    /**
+     * category *
+     */
     protected Category cat;
 
     public Stuff(String name) {
